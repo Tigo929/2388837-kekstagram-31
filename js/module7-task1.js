@@ -22,4 +22,4 @@ function photo(array) {
 const creadPhoto = photo(CREAT_PHOTO);
 list.appendChild(creadPhoto);
 
-export{photo};
+export{creadPhoto};

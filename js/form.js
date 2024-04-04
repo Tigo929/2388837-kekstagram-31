@@ -82,4 +82,50 @@ UserValueComment.addEventListener('keydown', (evt) => {
 });
 pristineComment.validate();
 
-export { onAndOffModal };
+const btnSmaller = document.querySelector('.scale__control--smaller');
+const btnmore = document.querySelector('.scale__control--bigger');
+const resultZoom = document.querySelector('.scale__control--value');
+const img = document.querySelector('.img-upload__preview img');
+
+let scale = 1;
+const SCALE_STEP = 0.25;
+const onSmallerClick = () => {
+  if (scale > SCALE_STEP) {
+    scale = scale - SCALE_STEP;
+    img.style.transform = `scale(${scale})`
+    resultZoom.value = scale * 100 + '%'
+  }
+}
+
+const onMoreClick = () => {
+  if (scale < 1) {
+    scale = scale + SCALE_STEP;
+    img.style.transform = `scale(${scale})`
+    resultZoom.value = scale * 100 + '%'
+  }
+}
+btnSmaller.addEventListener('click', onSmallerClick);
+btnmore.addEventListener('click', onMoreClick);
+
+
+const slider = document.querySelector('.effect-level__slider');
+const valueSlider = document.querySelector('.effect-level__value');
+noUiSlider.create(slider, {
+  start: 0,
+  connect: 'lower',
+  range: {
+    'min': 0,
+    'max': 1,
+  },
+  format: {
+    to: (value) => {
+      return Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1);
+    },
+    from: (value) => {
+      return parseFloat(value);
+    }
+  }
+});
+slider.noUiSlider.on('update',()=>{
+  valueSlider.value= slider.noUiSlider.get();
+})
